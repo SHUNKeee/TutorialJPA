@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional; // 追加
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;//さらに追加
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional; // 追加
 

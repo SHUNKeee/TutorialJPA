@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam; // 追加
 
 
 @Controller
-@RequestMapping("/country")
+@RequestMapping("country")
 public class CountryController {
     private final CountryService service;
 
@@ -28,9 +28,9 @@ public class CountryController {
     }
     // ----- 追加:ここから -----
     // ----- 詳細画面 -----
-    @GetMapping("/detail/{code}")
-    public String getCountry(@PathVariable("code") String code, Model model) {
-        Country country = service.getCountry(code);
+    @GetMapping(value = { "/detail", "/detail/{code}/" })
+    public String getCountry(@PathVariable(name="code",required=false) String code, Model model) {
+        Country country = code != null ? service.getCountry(code) : new Country();
         model.addAttribute("country", country);
         return "country/detail";
 
@@ -48,10 +48,9 @@ public class CountryController {
     }
 
     // ----- 削除画面 -----
-    @GetMapping("/delete/{code}")
-    public String deleteCountryForm(@PathVariable("code") String code, Model model) {
-        Country country = service.getCountry(code);
-        model.addAttribute("country", country);
+    @GetMapping("/delete")
+    public String deleteCountryForm(Model model) {
+        // country/delete.htmlに画面遷移
         return "country/delete";
     }
 
