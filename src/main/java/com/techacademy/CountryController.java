@@ -27,10 +27,20 @@ public class CountryController {
         return "country/list";
     }
     // ----- 追加:ここから -----
-    // ----- 詳細画面 -----
-    @GetMapping(value = { "/detail", "/detail/{code}/" })
-    public String getCountry(@PathVariable(name="code",required=false) String code, Model model) {
+    @GetMapping(value = { "/detail"})
+    public String getCou(@PathVariable(name = "code", required = false) String code, Model model) {
+        // codeが指定されていたら検索結果、無ければ空のクラスを設定
         Country country = code != null ? service.getCountry(code) : new Country();
+        // Modelに登録
+        model.addAttribute("country", country);
+        // country/detail.htmlに画面遷移
+        return "country/detail";
+    }
+
+    // ----- 詳細画面 -----
+    @GetMapping("/detail/{code}")
+    public String getCountry(@PathVariable("code") String code, Model model) {
+        Country country = service.getCountry(code);
         model.addAttribute("country", country);
         return "country/detail";
 
